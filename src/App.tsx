@@ -9,8 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "./components/ui/table";
-import { Dialog } from "@radix-ui/react-dialog";
 import {
+  Dialog,
   DialogClose,
   DialogContent,
   DialogDescription,
