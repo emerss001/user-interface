@@ -20,31 +20,10 @@ import {
   DialogTrigger,
 } from "./components/ui/dialog";
 import { Label } from "./components/ui/label";
-import api from "./services/api";
-import { useState, useEffect } from "react";
+import { getUsers } from "./services/get-users";
 
 export function App() {
-  interface User {
-    id: string;
-    name: string;
-    email: string;
-    age: number;
-  }
-  const [users, setUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const response = await api.get("/users");
-        const usersData: User[] = response.data.users;
-        setUsers(usersData);
-      } catch (error) {
-        throw new Error("Error when getting users");
-      }
-    };
-
-    getUsers();
-  }, []);
+  const users = getUsers();
 
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-4">
