@@ -20,8 +20,32 @@ import {
   DialogTrigger,
 } from "./components/ui/dialog";
 import { Label } from "./components/ui/label";
+import api from "./services/api";
+import { useState, useEffect } from "react";
 
 export function App() {
+  interface User {
+    id: string;
+    name: string;
+    email: string;
+    age: number;
+  }
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const response = await api.get("/users");
+        const usersData: User[] = response.data.users;
+        setUsers(usersData);
+      } catch (error) {
+        throw new Error("Error when getting users");
+      }
+    };
+
+    getUsers();
+  }, []);
+
   return (
     <div className="p-6 max-w-4xl mx-auto space-y-4">
       <h1 className="text-4xl font-bold">Users 👨‍💻</h1>
@@ -91,13 +115,13 @@ export function App() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {Array.from({ length: 10 }).map((_, i) => {
+            {users.map((user) => {
               return (
-                <TableRow key={i}>
-                  <TableCell>uyiukljsdgdfggzsdgdgdfgs</TableCell>
-                  <TableCell>Emerson Neves {i}</TableCell>
-                  <TableCell>emerson@gmail.com</TableCell>
-                  <TableCell>19</TableCell>
+                <TableRow key={user.id}>
+                  <TableCell>{user.id}</TableCell>
+                  <TableCell>{user.name}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.age}</TableCell>
                 </TableRow>
               );
             })}
