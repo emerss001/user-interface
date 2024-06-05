@@ -6,8 +6,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const usersFilterSchema = z.object({
-  username: z.string(),
-  age: z.coerce.number(),
+  username: z.string().optional(),
+  age: z.string().optional(),
 });
 
 type UsersFilterSchema = z.infer<typeof usersFilterSchema>;
